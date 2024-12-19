@@ -90,12 +90,13 @@ document.addEventListener('DOMContentLoaded', function () {
         .split('/')
         .pop()
         .replace('N_', '')
-        .replace('sm_', '')
+        .replace('zm_', '')
         .replace('.mp3', ''),
       chosenWord: event.target.src
         .split('/')
         .pop()
         .replace('N_', '')
+        .replace('.jpeg', '')
         .replace('.jpg', ''),
       chosenCategory: event.target.dataset.wordCategory,
       chosenPosition: event.target.classList[0],

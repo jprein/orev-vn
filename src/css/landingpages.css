@@ -125,7 +125,7 @@ input[type='number']::-webkit-outer-spin-button {
     cursor: pointer;
   }
   
-  .custom-button:disabled {
+.custom-button:disabled {
     background-color: hsl(177, 100%, 36%) !important;
   }
 
@@ -151,4 +151,8 @@ input[type='number']::-webkit-outer-spin-button {
   
   .radio-label {
     margin: 20px;
+  }
+
+  #video-img-item {
+    max-width: 100%;
   }
