@@ -11,6 +11,7 @@ export const downloadData = (safe, ID) => {
   const titleKeys = [
     'subjID',
     'trial',
+    'wordClass',
     'targetWord',
     'chosenWord',
     'chosenCategory',
@@ -23,6 +24,7 @@ export const downloadData = (safe, ID) => {
   const columnNames = [
     'id',
     'trial',
+    'word_class',
     'target_word',
     'chosen_word',
     'chosen_category',
