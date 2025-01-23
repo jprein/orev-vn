@@ -7,10 +7,21 @@ import { pause } from './js/pause.js';
 // import { hideURLparams } from './js/hideURLparams.js';
 import { openFullscreen } from './js/openFullscreen.js';
 import { checkForTouchscreen } from './js/checkForTouchscreen.js';
-import { randomizeNewTrials } from './js/randomizeNewTrials.js';
+// import { randomizeNewTrials } from './js/randomizeNewTrials.js';
 
 document.addEventListener('DOMContentLoaded', function () {
   const devmode = false;
+
+  //------------------------------------------------------------------
+  // automatically add running trial numbers as ids to html
+  //------------------------------------------------------------------
+  const trialDivs = document.querySelectorAll('.trials');
+
+  // Iterate over trial divs and set their IDs
+  trialDivs.forEach((div, index) => {
+    div.id = `trial${index}`;
+  });
+
   //------------------------------------------------------------------
   // create object to save data
   //------------------------------------------------------------------
@@ -90,15 +101,22 @@ document.addEventListener('DOMContentLoaded', function () {
         .split('/')
         .pop()
         .replace('N_', '')
-        .replace('sm_', '')
+        .replace('V_', '')
+        .replace('zm_', '')
         .replace('.mp3', ''),
       chosenWord: event.target.src
         .split('/')
         .pop()
         .replace('N_', '')
-        .replace('.jpg', ''),
+        .replace('V_', '')
+        .replace('.jpeg', ''),
       chosenCategory: event.target.dataset.wordCategory,
       chosenPosition: event.target.classList[0],
+      wordClass: allAudios[trialNr - 1].src.split('/').pop().startsWith('N_')
+        ? 'noun'
+        : allAudios[trialNr - 1].src.split('/').pop().startsWith('V_')
+        ? 'verb'
+        : 'unknown',
     };
 
     button.addEventListener('click', handleContinueClick, {
@@ -129,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // for safari, first sound needs to happen on user interaction
       allAudios[trialNr].play();
 
-      await pause(2000);
+      await pause(1000);
 
       button.addEventListener('click', handleContinueClick, {
         capture: false,
@@ -137,7 +155,8 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    if (trialNr === document.querySelectorAll('[id^="trial"]').length) {
+    // end of trials
+    if (trialNr === trialDivs.length) {
       downloadData(responseLog.data, responseLog.meta.subjID);
 
       // save the video locally
