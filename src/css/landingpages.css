@@ -112,9 +112,9 @@ input[type='number']::-webkit-outer-spin-button {
     width: 55%;
     height: auto;
     padding: 0%;
- }
+}
  
- .custom-button {
+.custom-button {
     background-color: var(--ccp-minerva-green) !important;
     margin: 10px 0 !important;
     color: white;
@@ -123,11 +123,11 @@ input[type='number']::-webkit-outer-spin-button {
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
   
-  .custom-button:disabled {
+.custom-button:disabled {
     background-color: hsl(177, 100%, 36%) !important;
-  }
+}
 
 
 .input-field input {
@@ -138,17 +138,21 @@ input[type='number']::-webkit-outer-spin-button {
     border-radius: 5px;
     box-sizing: border-box;
     text-align: center;
-  }
+}
   
-  .input-field input:focus {
+.input-field input:focus {
     border-color: var(--ccp-minerva-green) !important;
     outline: none;
-  }
+}
   
-  #id-counter{
+#id-counter{
     font-size: 16px;
-  }
+}
   
-  .radio-label {
+.radio-label {
     margin: 20px;
-  }
+}
+
+#video-img-item {
+    max-width: 100%;
+}
