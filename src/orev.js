@@ -9,6 +9,15 @@ import { openFullscreen } from './js/openFullscreen.js';
 import { checkForTouchscreen } from './js/checkForTouchscreen.js';
 // import { randomizeNewTrials } from './js/randomizeNewTrials.js';
 
+const storedChoices = localStorage.getItem('storedChoices');
+let studyChoices;
+
+if (storedChoices) {
+  studyChoices = JSON.parse(storedChoices);
+} else {
+  console.error('No data found in local storage');
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const devmode = false;
 
@@ -29,11 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // get ID out of URL parameter
     meta: {
       subjID:
-        new URL(document.location.href).searchParams.get('ID') || 'testID',
+      studyChoices?.ID || 'testID',
       order: window.location.pathname.split('/').pop().replace('.html', ''),
       touchscreen: checkForTouchscreen(),
       webcam:
-        new URL(document.location.href).searchParams.get('webcam') === 'true' ||
+      studyChoices?.webcam == true ||
         false,
     },
     data: [],
@@ -178,8 +187,9 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       await pause(1000);
-
-      window.location.href = `./goodbye.html?ID=${responseLog.meta.subjID}`;
+      
+      studyChoices.ID = responseLog.meta.subjID
+      window.location.href = `./goodbye.html`;
     }
 
     // hide last Trial, show background (empty pictures) instead
@@ -229,7 +239,8 @@ document.addEventListener('DOMContentLoaded', function () {
   //------------------------------------------------------------------
   const handleSpeakerClick = async (event) => {
     event.preventDefault();
-
+    console.log(allAudios);
+    console.log(trialNr);
     // use trial - 1 since the trial count already went up in the continue click function
     // pause audio
     if (trialNr > 1) {

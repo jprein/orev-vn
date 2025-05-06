@@ -1,21 +1,24 @@
 {
     "name": "orev-vn",
+    "private": true,
     "version": "1.0.0",
     "description": "",
-    "main": "src/index.js",
     "scripts": {
-        "start": "webpack serve",
-        "build": "NODE_ENV=production webpack",
-        "deploy": "npm run build && rsync -avuh --chmod D2775 dist/ $npm_config_user@$npm_config_server:$npm_config_path",
-        "fetchdata": "rsync -vraP $npm_config_user@$npm_config_server:$npm_config_data_path src/participant_data/"
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
     },
     "keywords": [],
     "author": "",
     "license": "MIT",
     "dependencies": {
         "@ccp-eva/media-recorder": "^2.1.1",
+        "@vite-pwa/assets-generator": "^1.0.0",
         "babel": "^6.23.0",
-        "detectrtc": "^1.4.1"
+        "bun": "^1.2.10",
+        "detectrtc": "^1.4.1",
+        "rollup-plugin-copy": "^3.5.0",
+        "vite-pwa": "^1.0.2"
     },
     "devDependencies": {
         "@babel/core": "^7.26.0",
@@ -29,8 +32,6 @@
         "sass": "^1.81.0",
         "sass-loader": "^16.0.3",
         "style-loader": "^4.0.0",
-        "webpack": "^5.96.1",
-        "webpack-cli": "^5.1.4",
-        "webpack-dev-server": "^5.1.0"
+        "vite-plugin-pwa": "^1.0.0"
     }
 }

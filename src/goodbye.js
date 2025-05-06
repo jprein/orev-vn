@@ -4,7 +4,17 @@ const button = document.getElementById('confirm-btn');
 const checkbox = document.getElementById('confirm-checkbox');
 const pDelete = document.getElementById('p-delete');
 const aDownload = document.getElementById('a-download');
-const subjID = new URL(document.location.href).searchParams.get('ID');
+
+const storedChoices = localStorage.getItem('storedChoices');
+let studyChoices;
+
+if (storedChoices) {
+  studyChoices = JSON.parse(storedChoices);
+} else {
+  console.error('No data found in local storage');
+}
+
+const subjID = studyChoices?.ID
 
 const handleChecked = () => {
   button.disabled = !checkbox.checked;
@@ -40,8 +50,8 @@ const handleConfirmClick = (event) => {
   const date = new Date();
 
   const toSave = {
-    // get ID out of URL parameter
-    subjID: new URL(document.location.href).searchParams.get('ID'),
+    // get ID out of stored parameters
+    subjID: studyChoices.ID,
     deleteData: true,
     timestamp: date.toISOString(),
     epoch: date.getTime(),

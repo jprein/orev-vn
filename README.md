@@ -36,11 +36,12 @@ Development requires [Node.js](https://nodejs.org/en/)
 
 1. `git clone git@github.com:jprein/orev-vn.git`
 1. `npm install`
-1. `npm start`
+1. `npm run dev`
 
 #### Deploy Application To A Server
 
 1. `git clone git@github.com:jprein/orev-vn.git`
 1. `npm install`
 1. `npm run build`
-1. Upload the contents within the `dist` folder to your web hoster.
+2. `npm run preview`
+3. Upload the contents within the `dist` folder to your web hoster.
