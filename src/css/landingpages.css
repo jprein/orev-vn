@@ -6,14 +6,16 @@
     --mdc-theme-primary: var(--ccp-minerva-green);
 }
 
+body, input, select {
+    font-family: "PT Sans Narrow", sans-serif;
+}
+
 body {
-    font-family: 'PT Sans Narrow', sans-serif;
     background-color: var(--ccp-minerva-green);
     color: hsl(0 0% 10%);
 }
 
 .heading {
-    font-family: cholla-sans, sans-serif;
     font-weight: 700;
     letter-spacing: calc(20rem / 1000);
     color: var(--ccp-minerva-green);
@@ -21,7 +23,6 @@ body {
 }
 
 .heading-em {
-    font-family: cholla-sans, sans-serif;
     font-weight: 700;
     font-style: italic;
     letter-spacing: calc(20rem / 1000);
@@ -29,7 +30,6 @@ body {
 }
 
 .text {
-    font-family: pt-sans-narrow, sans-serif;
     font-weight: 400;
     color: hsl(0 0% 10%);
 }
@@ -50,6 +50,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #faf5e7;
+    border-radius: 8px;
 }
 
 .flex-item {
@@ -156,3 +157,39 @@ input[type='number']::-webkit-outer-spin-button {
 #video-img-item {
     max-width: 100%;
 }
+
+#pwa-toast {
+    visibility: hidden;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin: 50px;
+    padding: 12px;
+    border: 1px solid #8885;
+    border-radius: 10px;
+    background-color: #fff;
+    z-index: 1;
+    text-align: left;
+    box-shadow: 3px 4px 5px 0 #8885;
+    display: grid;
+  }
+  #pwa-toast .message {
+    margin-bottom: 8px;
+    font-size: 20px;
+  }
+  #pwa-toast .buttons {
+    display: flex;
+  }
+  #pwa-toast button {
+    margin: 10px 0 !important;
+    background-color: var(--ccp-minerva-green) !important;
+  }
+  #pwa-toast.show {
+    visibility: visible;
+  }
+  button#pwa-refresh {
+    display: none;
+  }
+  #pwa-toast.show.refresh button#pwa-refresh {
+    display: block;
+  }
