@@ -1,6 +1,5 @@
 import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vite';
-import copy from 'rollup-plugin-copy';
 import { resolve } from 'path';
 
 // https://vitejs.dev/config/
@@ -21,12 +20,6 @@ export default defineConfig({
     },
   },
   plugins: [
-    // copy({
-    //   targets: [
-    //     { src: 'public/*', dest: 'dist/' }
-    //   ],
-    //   hook: 'writeBundle'
-    // }),
     VitePWA({
       strategies: 'injectManifest',
       srcDir: 'service-worker',
