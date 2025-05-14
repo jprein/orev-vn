@@ -1,31 +1,31 @@
 {
-    "name": "orev-vn",
-    "private": true,
-    "version": "1.0.0",
-    "description": "",
-    "scripts": {
-        "dev": "bun vite",
-        "build": "bun vite build",
-        "preview": "bun vite preview"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "MIT",
-    "dependencies": {
-        "@ccp-eva/media-recorder": "^2.1.1",
-        "@vite-pwa/assets-generator": "^1.0.0",
-        "detectrtc": "^1.4.1",
-        "vite": "^6.3.5",
-        "vite-pwa": "^1.0.2",
-        "workbox-precaching": "^7.3.0",
-        "workbox-routing": "^7.3.0"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.26.0",
-        "@babel/preset-env": "^7.26.0",
-        "postcss": "^8.4.49",
-        "postcss-preset-env": "^10.1.1",
-        "sass": "^1.81.0",
-        "vite-plugin-pwa": "^1.0.0"
-    }
+  "name": "orev-pwa",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ccp-eva/media-recorder": "^2.1.1",
+    "@vite-pwa/assets-generator": "^1.0.0",
+    "detectrtc": "^1.4.1",
+    "vite": "^6.3.5",
+    "vite-pwa": "^1.0.2",
+    "workbox-precaching": "^7.3.0",
+    "workbox-routing": "^7.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "postcss": "^8.4.49",
+    "postcss-preset-env": "^10.1.1",
+    "sass": "^1.81.0",
+    "vite-plugin-pwa": "^1.0.0"
+  }
 }
