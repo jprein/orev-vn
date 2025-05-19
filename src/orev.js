@@ -37,13 +37,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const responseLog = {
     // get ID out of URL parameter
     meta: {
-      subjID:
-      studyChoices?.ID || 'testID',
+      subjID: studyChoices?.ID || 'testID',
       order: window.location.pathname.split('/').pop().replace('.html', ''),
       touchscreen: checkForTouchscreen(),
-      webcam:
-      studyChoices?.webcam == true ||
-        false,
+      webcam: studyChoices?.webcam || false,
     },
     data: [],
   };
@@ -187,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       await pause(1000);
-      
-      studyChoices.ID = responseLog.meta.subjID
+
+      studyChoices.ID = responseLog.meta.subjID;
       window.location.href = `./goodbye.html`;
     }
 
@@ -239,8 +236,6 @@ document.addEventListener('DOMContentLoaded', function () {
   //------------------------------------------------------------------
   const handleSpeakerClick = async (event) => {
     event.preventDefault();
-    console.log(allAudios);
-    console.log(trialNr);
     // use trial - 1 since the trial count already went up in the continue click function
     // pause audio
     if (trialNr > 1) {

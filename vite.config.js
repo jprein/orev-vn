@@ -36,9 +36,9 @@ export default defineConfig({
       },
 
       manifest: {
-        name: 'orev-vn',
-        short_name: 'orev-vn',
-        description: 'This is the orev-vn as a PWA.',
+        name: 'orev-pwa',
+        short_name: 'orev-pwa',
+        description: 'This is the orev as a PWA.',
         background_color: '#006c66',
         theme_color: '#006c66',
         start_url: './',
@@ -75,10 +75,10 @@ export default defineConfig({
         type: 'module',
       },
       // to cache images and pdfs, serve them offline
-       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,png,ico,mp3,pdf}"],
-       },
-      includeAssets: ["**/*"],
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,svg,png,ico,mp3,pdf}'],
+      },
+      includeAssets: ['**/*'],
     }),
   ],
   resolve: {

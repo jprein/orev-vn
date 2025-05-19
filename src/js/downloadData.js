@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // FUNCTION FOR DOWNLOADING DATA LOCALLY; WITH BLOB
 // ---------------------------------------------------------------------------------------------------------------------
-export function downloadData (safe, ID) {
+export function downloadData(safe, ID) {
   safe.forEach((item) => {
     item.subjID = ID;
     item.correct = item.targetWord === item.chosenWord;
@@ -59,6 +59,6 @@ export function downloadData (safe, ID) {
   const objUrl = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.setAttribute('href', objUrl);
-  link.setAttribute('download', `orev-vn-${ID}-${day}-${time}.csv`);
+  link.setAttribute('download', `orev-pwa-${ID}-${day}-${time}.csv`);
   link.click();
-};
+}
