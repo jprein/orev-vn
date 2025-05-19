@@ -30,12 +30,12 @@ textField.addEventListener('keyup', handleInput, { capture: false });
 // FOR WEBCAM RECORIDING
 // get both radio buttons
 const webcamOptions = document.getElementsByName('webcam-options');
-let webcam = 'false'; // no as default
+let webcam = false; // no as default
 
 for (const option of webcamOptions) {
   option.onclick = () => {
     if (option.checked) {
-      webcam = option.value;
+      webcam = option.value == 'true';
     }
   };
 }
