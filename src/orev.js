@@ -174,16 +174,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const day = new Date().toISOString().substring(0, 10);
         const time = new Date().toISOString().substring(11, 19);
 
-        setTimeout(
-          () =>
-            mrec.downloadVideo(
-              `orev-${responseLog.meta.subjID}-${day}-${time}`,
-            ),
-          1000,
-        );
+        await pause(2000);
+        mrec.downloadVideo(`orev-${responseLog.meta.subjID}-${day}-${time}`);
+        await pause(2000);
       }
 
-      await pause(1000);
+      await pause(2000);
 
       studyChoices.ID = responseLog.meta.subjID;
       window.location.href = `./goodbye.html`;

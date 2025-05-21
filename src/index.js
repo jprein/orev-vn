@@ -35,7 +35,7 @@ let webcam = false; // no as default
 for (const option of webcamOptions) {
   option.onclick = () => {
     if (option.checked) {
-      webcam = option.value == 'true';
+      webcam = option.value;
     }
   };
 }
@@ -50,7 +50,7 @@ const handleContinueClick = (event) => {
     ID: subjID,
     webcam: webcam,
   };
-  
+
   localStorage.setItem('storedChoices', JSON.stringify(studyChoices));
 
   window.location.href = `./instructions.html`;
