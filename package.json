@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "vite build && sh src/scripts/deploy.sh",
+    "fetchdata": "sh src/scripts/fetchdata.sh"
   },
   "keywords": [],
   "author": "",
