@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>oREV-PWA</title>
+    <script type="module" crossorigin src="./assets/orev-BQSrYrhf.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="stylesheet" crossorigin href="./assets/orev-5iOe55aP.css">
+  <link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#006c66">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon-180x180.png"></head>
+
+  <body>
+    <div id="flex-wrapper">
+      <div class="flex-item">
+        <br />
+
+        <h2
+          id="heading-fullscreen"
+          style="
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+          "
+        >
+          <p>
+            Nehmen Sie sich so viel Zeit, wie Sie möchten. Falls Ihr Kind
+            unruhig wird oder sich langweilt, können Sie jederzeit eine kurze
+            Pause machen.
+          </p>
+
+          <p>
+            Wenn Ihr Kind Sie um Rat fragt oder sich unsicher ist, sagen Sie
+            bitte "Zeig, was Du denkst". Alles, was Ihr Kind antwortet, ist
+            prima.
+          </p>
+
+          <p>
+            Bitte helfen Sie Ihrem Kind nicht bei den Aufgaben - wir wollen ja
+            etwas über Kinder lernen!
+          </p>
+
+          <p>
+            Bitte klicken Sie jetzt auf "WEITER", um den Vollbildmodus zu
+            aktivieren.
+          </p>
+        </h2>
+
+        <h2
+          id="heading-testsound"
+          style="
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+            display: none;
+          "
+        >
+          <p>Haben Sie gerade ein kurzes Klimper-Geräusch gehört?</p>
+
+          <p>
+            Super! Falls nicht, klicken Sie bitte auf das Lautsprecher-Symbol,
+            um Ihren Ton zu testen.
+          </p>
+
+          <p>
+            Bitte klicken Sie jetzt auf "WEITER", um mit dem Spiel zu beginnen.
+          </p>
+        </h2>
+
+        <div class="main-flex-sheet">
+          <div class="flex-sheet trials" style="display: none">
+            <audio id="testsound" src="audio/testsound.mp3"></audio>
+          </div>
+
+          <div id="between-trials" class="flex-sheet">
+            <div class="image">
+              <img
+                class="upper-left"
+                src="images/background.png"
+                style="border: 0.3vw solid #faf5e7"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                src="images/background.png"
+                style="border: 0.3vw solid #faf5e7"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                src="images/background.png"
+                style="border: 0.3vw solid #faf5e7"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                src="images/background.png"
+                style="border: 0.3vw solid #faf5e7"
+              />
+            </div>
+          </div>
+
+          <!-- dist1: semantic distractor, dist2: phonological, dist3: unrelated -->
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_auge.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/nouns/N_auge.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/nouns/N_kamm.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/nouns/N_trommel.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/nouns/N_nase.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_schweben.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist1"
+                src="images/verbs/V_springen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/verbs/V_schieben.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="target"
+                src="images/verbs/V_schweben.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist3"
+                src="images/verbs/V_weinen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_moehre.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/nouns/N_bett.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist1"
+                src="images/nouns/N_gurke.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/nouns/N_uhr.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/nouns/N_moehre.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_ameise.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist1"
+                src="images/nouns/N_vogel.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="target"
+                src="images/nouns/N_ameise.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/nouns/N_kaese.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist2"
+                src="images/nouns/N_ball.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_jonglieren.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/verbs/V_verlieren.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="target"
+                src="images/verbs/V_jonglieren.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/verbs/V_anfassen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/verbs/V_werfen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_elch.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/nouns/N_elch.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/nouns/N_skelett.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/nouns/N_mammut.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist2"
+                src="images/nouns/N_kelch.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_chor.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/nouns/N_rohr.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="target"
+                src="images/nouns/N_chor.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/nouns/N_tastatur.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/nouns/N_orchester.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_torkeln.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/verbs/V_torkeln.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/verbs/V_schnorcheln.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/verbs/V_huepfen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist3"
+                src="images/verbs/V_backen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_studieren.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/verbs/V_marschieren.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist1"
+                src="images/verbs/V_unterrichten.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/verbs/V_liegen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/verbs/V_studieren.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_operieren.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/verbs/V_rufen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist1"
+                src="images/verbs/V_impfen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="target"
+                src="images/verbs/V_operieren.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist2"
+                src="images/verbs/V_spazieren.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_ventilator.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/nouns/N_teekanne.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/nouns/N_gartentor.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="target"
+                src="images/nouns/N_ventilator.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/nouns/N_faecher.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_waehlen.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/verbs/V_bauen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist1"
+                src="images/verbs/V_ueberlegen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist2"
+                src="images/verbs/V_schaelen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/verbs/V_waehlen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_rucola.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/nouns/N_drakula.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/nouns/N_plakat.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/nouns/N_rosenkohl.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/nouns/N_rucola.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_scheren.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist1"
+                src="images/verbs/V_streicheln.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="target"
+                src="images/verbs/V_scheren.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/verbs/V_begruessen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist2"
+                src="images/verbs/V_leeren.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_giraffe.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/nouns/N_giraffe.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/nouns/N_auto.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/nouns/N_schnecke.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist2"
+                src="images/nouns/N_pizza.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_palme.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/nouns/N_becher.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist1"
+                src="images/nouns/N_kaktus.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="target"
+                src="images/nouns/N_palme.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist2"
+                src="images/nouns/N_trinkhalme.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_tadeln.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/verbs/V_fluestern.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="target"
+                src="images/verbs/V_tadeln.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist2"
+                src="images/verbs/V_radeln.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/verbs/V_loben.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_ananas.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/nouns/N_schlips.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/nouns/N_gitarre.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/nouns/N_wassermelone.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/nouns/N_ananas.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_empfangen.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/verbs/V_einfangen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/verbs/V_gießen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/verbs/V_verschicken.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/verbs/V_empfangen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_verloben.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/verbs/V_verloben.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/verbs/V_joggen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist2"
+                src="images/verbs/V_vergeben.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/verbs/V_heiraten.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_ozean.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/nouns/N_ozean.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/nouns/N_fabrik.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/nouns/N_fluss.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist2"
+                src="images/nouns/N_pelikan.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_faulenzen.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/verbs/V_faulenzen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/verbs/V_kochen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist2"
+                src="images/verbs/V_spazieren.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/verbs/V_begrenzen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_gazelle.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/nouns/N_libelle.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist1"
+                src="images/nouns/N_reh.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/nouns/N_astronaut.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/nouns/N_gazelle.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_liefern.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist1"
+                src="images/verbs/V_holen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/verbs/V_troesten.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="target"
+                src="images/verbs/V_liefern.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist2"
+                src="images/verbs/V_toepfern.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_pfifferling.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/nouns/N_pfifferling.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/nouns/N_diamant.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist2"
+                src="images/nouns/N_schmetterling.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/nouns/N_kastanie.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_dekorieren.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/verbs/V_ignorieren.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="target"
+                src="images/verbs/V_dekorieren.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/verbs/V_lesen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/verbs/V_werkeln.jpeg"
+              />
+            </div>
+          </div>
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_bekennen.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/verbs/V_bekennen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/verbs/V_verbrennen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/verbs/V_ziehen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/verbs/V_verstecken.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_ruine.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/nouns/N_torwart.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist1"
+                src="images/nouns/N_festung.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist2"
+                src="images/nouns/N_schiene.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/nouns/N_ruine.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_labyrinth.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist1"
+                src="images/nouns/N_achterbahn.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/nouns/N_stau.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="target"
+                src="images/nouns/N_labyrinth.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist2"
+                src="images/nouns/N_wirbelwind.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_orchidee.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist1"
+                src="images/nouns/N_strauch.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/nouns/N_zeh.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="target"
+                src="images/nouns/N_orchidee.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist3"
+                src="images/nouns/N_banner.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_schwanken.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/verbs/V_malen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="target"
+                src="images/verbs/V_schwanken.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist2"
+                src="images/verbs/V_schenken.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/verbs/V_drehen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_zucchini.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/nouns/N_bikini.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="target"
+                src="images/nouns/N_zucchini.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/nouns/N_skateboard.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/nouns/N_brokkoli.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_tuermen.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/verbs/V_tuermen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/verbs/V_kruemmen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/verbs/V_sammeln.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist3"
+                src="images/verbs/V_oeffnen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_befreien.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/verbs/V_schreien.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist1"
+                src="images/verbs/V_fangen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist3"
+                src="images/verbs/V_pusten.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/verbs/V_befreien.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_kajak.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/nouns/N_kajak.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/nouns/N_rucksack.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/nouns/N_segelboot.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist3"
+                src="images/nouns/N_bumerang.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_abseilen.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="target"
+                src="images/verbs/V_abseilen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/verbs/V_schreiben.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/verbs/V_herunterklettern.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist2"
+                src="images/verbs/V_beeilen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_tuscheln.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/verbs/V_singen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/verbs/V_tuschen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/verbs/V_verpetzen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/verbs/V_tuscheln.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_hummer.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/nouns/N_mikroskop.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="target"
+                src="images/nouns/N_hummer.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist2"
+                src="images/nouns/N_klammer.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/nouns/N_krebs.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_nelke.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/nouns/N_kompass.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="target"
+                src="images/nouns/N_nelke.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist2"
+                src="images/nouns/N_zelt.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/nouns/N_veilchen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/V_zm_betrachten.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/verbs/V_telefonieren.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/verbs/V_bewachen.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="target"
+                src="images/verbs/V_betrachten.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/verbs/V_zeigen.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_flunder.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist2"
+                src="images/nouns/N_holunder.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist3"
+                src="images/nouns/N_pyramide.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="dist1"
+                src="images/nouns/N_orca.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="target"
+                src="images/nouns/N_flunder.jpeg"
+              />
+            </div>
+          </div>
+
+          <div class="flex-sheet trials" style="display: none">
+            <audio src="audio/N_zm_cello.mp3"></audio>
+            <div class="image">
+              <img
+                class="upper-left"
+                data-word-category="dist3"
+                src="images/nouns/N_steg.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="upper-right"
+                data-word-category="dist2"
+                src="images/nouns/N_marshmallow.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-left"
+                data-word-category="target"
+                src="images/nouns/N_cello.jpeg"
+              />
+            </div>
+            <div class="image">
+              <img
+                class="lower-right"
+                data-word-category="dist1"
+                src="images/nouns/N_harfe.jpeg"
+              />
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+        <svg
+          id="svg"
+          xmlns="http://www.w3.org/2000/svg"
+          width="10%"
+          height="10%"
+          viewBox="0 0 394.79 394.79"
+        >
+          <g id="speaker" visibility="hidden">
+            <circle
+              id="speaker-circle"
+              cx="197.4"
+              cy="197.4"
+              r="197.4"
+              fill="#006c66"
+              fill-opacity="0.6"
+            />
+            <g id="speaker-sign">
+              <path
+                d="M728.7,1341.46a8.92,8.92,0,0,0-9.11.35l-80.12,52H609.86a8.91,8.91,0,0,0-8.91,8.91v78.09a8.91,8.91,0,0,0,8.91,8.91h29.61l80.12,52a8.91,8.91,0,0,0,13.77-7.47v-185A8.9,8.9,0,0,0,728.7,1341.46Z"
+                transform="translate(-532.7 -1240.32)"
+                fill="#fff"
+              />
+              <path
+                d="M758.17,1504.85a6.24,6.24,0,0,0,2.26-.43c20.41-7.92,34.12-32.41,34.12-60.93,0-25.23-11.11-48-28.32-58.13a6.25,6.25,0,1,0-6.32,10.78c13.45,7.89,22.15,26.47,22.15,47.35,0,23-10.76,43.3-26.16,49.28a6.25,6.25,0,0,0,2.27,12.08Z"
+                transform="translate(-532.7 -1240.32)"
+                fill="#fff"
+              />
+              <path
+                d="M774.48,1530.91a6.2,6.2,0,0,0,2.26-.43c28.67-11.13,48.69-47.14,48.69-87.57,0-36.37-15.9-69.19-40.51-83.61a6.25,6.25,0,0,0-6.32,10.79c20.86,12.22,34.34,40.8,34.34,72.82,0,35.39-16.75,66.61-40.72,75.92a6.25,6.25,0,0,0,2.26,12.08Z"
+                transform="translate(-532.7 -1240.32)"
+                fill="#fff"
+              />
+              <path
+                d="M791.28,1555.75a6.32,6.32,0,0,1-2.29-12.21c32.65-12.67,55.45-54.23,55.45-101.07,0-42.22-18.2-80.16-46.36-96.67a6.31,6.31,0,1,1,6.38-10.89c32,18.72,52.61,60.94,52.61,107.56,0,51.93-26.11,98.33-63.5,112.85A6.36,6.36,0,0,1,791.28,1555.75Z"
+                transform="translate(-532.7 -1240.32)"
+                fill="#fff"
+              />
+            </g>
+          </g>
+        </svg>
+
+        <br />
+        <br />
+
+        <div class="button-center-wrapper">
+          <button type="button" class="custom-button" id="orev-button" disabled>
+            <span><strong>WEITER</strong></span>
+          </button>
+        </div>
+
+        <!-- <a href="https://www.eva.mpg.de/imprint/" target="_blank">Impressum</a> -->
+
+        <!-- end flex-item -->
+      </div>
+
+      <!-- end flex-wrapper -->
+    </div>
+  </body>
+</html>

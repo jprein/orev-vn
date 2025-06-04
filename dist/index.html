@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>oREV-PWA</title>
+    <script type="module" crossorigin src="./assets/index-DEG5lu_X.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="stylesheet" crossorigin href="./assets/landingpages-CWgG3GlC.css">
+  <link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#006c66">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon-180x180.png"></head>
+
+  <body>
+    <div id="app">
+      <div id="pwa-toast" role="alert" aria-labelledby="toast-message">
+        <div class="message">
+          <span id="toast-message"></span>
+        </div>
+
+        <button type="button" class="custom-button" id="pwa-refresh">
+          <span><strong>RELOAD</strong></span>
+        </button>
+
+        <button type="button" class="custom-button" id="pwa-close">
+          <span><strong>CLOSE</strong></span>
+        </button>
+      </div>
+      <div id="flex-wrapper">
+        <div class="flex-item">
+          <br />
+
+          <h1 class="heading">
+            oREV-pwa <br />
+            offener Rezeptiver Vokabeltest mit Verben und Nomen
+          </h1>
+
+          <h3>
+            Vielen Dank für Ihr Interesse an unserem Vokabeltest für
+            Vorschulkinder. <br />
+          </h3>
+
+          <!-- <p>
+            Zitation: <br />
+            Bohn, M.*, Prein, J.*, Koch, T., Bee, M., Delikaya, B., Haun, D. B.
+            M.&amp; Gagarina, N. (2023).
+            <br />
+            oREV: an Item Response Theory based open receptive vocabulary task for
+            3- to 8-year-old children.
+            <br />
+            <em>
+              Behavior Research Methods
+            </em>
+            .
+            <br />
+            <a href="https://doi.org/10.3758/s13428-023-02169-3"
+              >https://doi.org/10.3758/s13428-023-02169-3</a
+            >
+          </p> -->
+
+          <br />
+          <hr style="width: 100%; text-align: left; margin-left: 0" />
+          <br />
+
+          <p>
+            <strong>
+              Bitte tragen Sie hier einen Namen oder Pseudonym ein:
+            </strong>
+          </p>
+
+          <div class="input-field">
+            <input
+              type="text"
+              maxlength="8"
+              id="participant-id"
+              name="participant-id"
+            />
+          </div>
+          <div id="id-counter">0 / 8</div>
+
+          <br />
+
+          <p>
+            <strong> Möchten Sie eine Webcam-Aufnahme starten? </strong>
+          </p>
+
+          <label class="radio-label">
+            <input type="radio" name="webcam-options" value="true" />
+            Ja
+          </label>
+
+          <label class="radio-label">
+            <input type="radio" name="webcam-options" value="false" checked />
+            Nein
+          </label>
+
+          <br />
+          <br />
+
+          <p style="color: hsl(177, 100%, 21%)">
+            <strong>
+              <em>
+                Die Daten werden nach Abschluss der Studie als .json Datei (und,
+                soweit ausgewählt, das Video als .webm Videodatei) auf Ihrem
+                Gerät im Downloads Ordner gespeichert. Es werden keine weiteren
+                Kopien an anderen Orten gespeichert.
+              </em></strong
+            >
+          </p>
+
+          <br />
+
+          <div class="button-center-wrapper">
+            <button
+              type="button"
+              class="custom-button"
+              id="start-button"
+              disabled
+            >
+              <span><strong>ZUR STUDIE</strong></span>
+            </button>
+          </div>
+
+          <br />
+          <hr style="width: 100%; text-align: left; margin-left: 0" />
+          <br />
+
+          <div class="even-columns">
+            <div class="col">
+              <img id="logo-zas" src="./logos/Logo_Leibniz-ZAS.png" />
+            </div>
+            <div class="col">
+              <img id="logo-leuphana" src="./logos/leuphana.svg" />
+            </div>
+            <div class="col">
+              <img id="logo-ccp" src="./logos/mp-logo-minerva-farbig-rgb.svg" />
+            </div>
+          </div>
+
+          <br />
+
+          <a href="https://www.eva.mpg.de/de/impressum/" target="_blank"
+            >Impressum</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
