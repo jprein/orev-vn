@@ -1,6 +1,8 @@
 ### Our stuff
 # Configs
 .npmrc
+src/scripts
+src/participant_data
 
 dist/
 

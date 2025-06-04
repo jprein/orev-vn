@@ -2,15 +2,12 @@
 
 ### Usage
 
-Link to task (in German): https://devpsy.web.leuphana.de/orev-vn
+Link to task (in German): https://devpsy.web.leuphana.de/orev-pwa
 
 ### Structure
 
 ```
 .
-├── fetchdata                    <-- scripts for uploading data to server
-|    ├── data.php
-|    └── upload_video.php
 ├── public
 |    ├── audio                   <-- all audio prompts
 |    ├── data                    <-- folder where participant data will be saved
@@ -36,11 +33,12 @@ Development requires [Node.js](https://nodejs.org/en/)
 
 1. `git clone git@github.com:jprein/orev-vn.git`
 1. `npm install`
-1. `npm start`
+1. `npm run dev`
 
 #### Deploy Application To A Server
 
 1. `git clone git@github.com:jprein/orev-vn.git`
 1. `npm install`
 1. `npm run build`
+1. `npm run preview`
 1. Upload the contents within the `dist` folder to your web hoster.
