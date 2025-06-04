@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
-// FUNCTION FOR DOWNLOADING DATA LOCALLY; WITH BLOB
+// FUNCTION FOR UPLOADING DATA TO LEUPHANA SERVER
 // ---------------------------------------------------------------------------------------------------------------------
-export function downloadData(safe, ID) {
+export function uploadData(safe, ID) {
   safe.forEach((item) => {
     item.subjID = ID;
     item.correct = item.targetWord === item.chosenWord;
@@ -54,11 +54,24 @@ export function downloadData(safe, ID) {
   const day = new Date().toISOString().substring(0, 10);
   const time = new Date().toISOString().slice(11, 19).replaceAll(':', '-');
 
-  // download via blob
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8,' });
-  const objUrl = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.setAttribute('href', objUrl);
-  link.setAttribute('download', `orev-${ID}-${day}-${time}.csv`);
-  link.click();
+  // Prepare form data to send the CSV data as a file
+  const formData = new FormData();
+  formData.append(
+    'csvFile',
+    new Blob([csvContent], { type: 'text/csv' }),
+    `orev-${ID}-${day}-${time}.csv`,
+  );
+
+  // Send the data to the server
+  fetch('./data/data.php', {
+    method: 'POST',
+    body: formData,
+  })
+    .then((response) => response.text())
+    .then((result) => {
+      console.log('Success:', result);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }

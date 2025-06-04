@@ -3,6 +3,7 @@ import * as mrec from '@ccp-eva/media-recorder';
 import * as DetectRTC from 'detectrtc';
 
 import { downloadData } from './js/downloadData.js';
+import { uploadData } from './js/uploadData.js';
 import { pause } from './js/pause.js';
 // import { hideURLparams } from './js/hideURLparams.js';
 import { openFullscreen } from './js/openFullscreen.js';
@@ -37,10 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const responseLog = {
     // get ID out of URL parameter
     meta: {
-      subjID: studyChoices?.ID || 'testID',
+      subjID: studyChoices?.subjID || 'testID',
       order: window.location.pathname.split('/').pop().replace('.html', ''),
       touchscreen: checkForTouchscreen(),
-      webcam: studyChoices?.webcam || false,
+      webcam: studyChoices?.webcam === 'true' || false,
+      saving: studyChoices?.saving || 'download',
     },
     data: [],
   };
@@ -163,26 +165,66 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // end of trials
     if (trialNr === trialDivs.length) {
-      downloadData(responseLog.data, responseLog.meta.subjID);
+      // for download
+      if (responseLog.meta.saving === 'download') {
+        downloadData(responseLog.data, responseLog.meta.subjID);
+        // save the video locally
+        if (!responseLog.meta.iOSSafari && responseLog.meta.webcam) {
+          mrec.stopRecorder();
 
-      // save the video locally
-      if (!responseLog.meta.iOSSafari && responseLog.meta.webcam) {
-        mrec.stopRecorder();
+          // give some time to create Video Blob
 
+          const day = new Date().toISOString().substring(0, 10);
+          const time = new Date()
+            .toISOString()
+            .slice(11, 19)
+            .replaceAll(':', '-');
+
+          await pause(2000);
+          mrec.downloadVideo(`orev-${responseLog.meta.subjID}-${day}-${time}`);
+          await pause(2000);
+        }
+        window.location.href = `./goodbye.html`;
+        // for upload
+      } else if (responseLog.meta.saving === 'upload') {
+        uploadData(responseLog.data, responseLog.meta.subjID);
         // give some time to create Video Blob
+        if (!responseLog.meta.iOSSafari && responseLog.meta.webcam) {
+          mrec.stopRecorder();
 
-        const day = new Date().toISOString().substring(0, 10);
-        const time = new Date().toISOString().substring(11, 19);
+          // show upload spinner
+          mrec.modalContent(
+            '<img src=\'/orev-vn/images/spinner-upload-de.svg\' style="width: 75vw">',
+            '#E1B4B4',
+          );
 
+          const day = new Date().toISOString().substring(0, 10);
+          const time = new Date()
+            .toISOString()
+            .slice(11, 19)
+            .replaceAll(':', '-');
+
+          await pause(2000);
+          // Wrap the upload in a Promise so that we can await it.
+          mrec.uploadVideo(
+            {
+              fname: `orev-${responseLog.meta.subjID}-${day}-${time}`,
+              uploadContent:
+                '<img src=\'/orev-vn/images/spinner-upload-de.svg\' style="width: 75vw">',
+              uploadColor: '#E1B4B4',
+              successContent:
+                '<img src=\'/orev-vn/images/spinner-done-de.svg\' style="width: 75vw">',
+              successColor: '#D3F9D3',
+            },
+            './data/upload_video.php',
+          );
+
+          await pause(20000);
+        }
         await pause(2000);
-        mrec.downloadVideo(`orev-${responseLog.meta.subjID}-${day}-${time}`);
-        await pause(2000);
+        studyChoices.subjID = responseLog.meta.subjID;
+        window.location.href = `https://devpsy.web.leuphana.de/orev-consent/goodbye.html?subjID=${responseLog.meta.subjID}`;
       }
-
-      await pause(2000);
-
-      studyChoices.ID = responseLog.meta.subjID;
-      window.location.href = `./goodbye.html`;
     }
 
     // hide last Trial, show background (empty pictures) instead
@@ -271,19 +313,19 @@ document.addEventListener('DOMContentLoaded', function () {
         audio: true,
         video: {
           frameRate: {
-            min: 10,
-            ideal: 25,
-            max: 30,
+            min: 3,
+            ideal: 3,
+            max: 3,
           },
           width: {
-            min: 640,
-            ideal: 1280,
-            max: 1920,
+            min: 80,
+            ideal: 80,
+            max: 80,
           },
           height: {
-            min: 480,
-            ideal: 720,
-            max: 1080,
+            min: 60,
+            ideal: 60,
+            max: 60,
           },
           facingMode: 'user',
         },

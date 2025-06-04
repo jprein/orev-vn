@@ -47,7 +47,7 @@ const handleContinueClick = (event) => {
   const subjID = document.getElementById('participant-id').value;
 
   const studyChoices = {
-    ID: subjID,
+    subjID: subjID,
     webcam: webcam,
   };
 
