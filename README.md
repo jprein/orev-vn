@@ -31,13 +31,13 @@ Development requires [Node.js](https://nodejs.org/en/)
 
 #### Local Development
 
-1. `git clone git@github.com:jprein/orev-vn.git`
+1. `git clone git@github.com:jprein/orev-vn-kikuyu.git`
 1. `npm install`
 1. `npm run dev`
 
 #### Deploy Application To A Server
 
-1. `git clone git@github.com:jprein/orev-vn.git`
+1. `git clone git@github.com:jprein/orev-vn-kikuyu.git`
 1. `npm install`
 1. `npm run build`
 1. `npm run preview`
