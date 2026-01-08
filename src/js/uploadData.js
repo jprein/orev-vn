@@ -1,7 +1,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // FUNCTION FOR UPLOADING DATA TO LEUPHANA SERVER
 // ---------------------------------------------------------------------------------------------------------------------
-export function uploadData(safe, ID) {
+export async function uploadData(safe, ID) {
+  debugger;
   safe.forEach((item) => {
     item.subjID = ID;
     item.correct = item.targetWord === item.chosenWord;
@@ -19,6 +20,8 @@ export function uploadData(safe, ID) {
     'correct',
     'timestamp',
     'responseTime',
+    'browser',
+    'OS',
   ];
 
   const columnNames = [
@@ -32,6 +35,8 @@ export function uploadData(safe, ID) {
     'correct',
     'timestamp',
     'responsetime_ms',
+    'browser',
+    'OS',
   ];
 
   const refinedData = [];
@@ -59,7 +64,7 @@ export function uploadData(safe, ID) {
   formData.append(
     'csvFile',
     new Blob([csvContent], { type: 'text/csv' }),
-    `orev-${ID}-${day}-${time}.csv`,
+    `orev-vn-${ID}-${day}-${time}.csv`,
   );
 
   // Send the data to the server
