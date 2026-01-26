@@ -117,7 +117,8 @@ document.addEventListener('DOMContentLoaded', function () {
         .pop()
         .replace('N_', '')
         .replace('V_', '')
-        .replace('.jpeg', ''),
+        .replace('.jpeg', '')
+        .replace('.png', ''),
       chosenCategory: event.target.dataset.wordCategory,
       chosenPosition: event.target.classList[0],
       wordClass: allAudios[trialNr - 1].src.split('/').pop().startsWith('N_')
