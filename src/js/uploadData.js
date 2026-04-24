@@ -4,7 +4,7 @@
 export function uploadData(safe, ID) {
   safe.forEach((item) => {
     item.subjID = ID;
-    item.correct = item.targetWord === item.chosenWord;
+    item.correct = (item.chosenCategory === "target");
   });
 
   // convert object into CSV string
