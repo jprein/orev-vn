@@ -19,6 +19,8 @@ export function downloadData(safe, ID) {
     'correct',
     'timestamp',
     'responseTime',
+    'browser',
+    'OS',
   ];
 
   const columnNames = [
@@ -32,6 +34,8 @@ export function downloadData(safe, ID) {
     'correct',
     'timestamp',
     'responsetime_ms',
+    'browser',
+    'OS',
   ];
 
   const refinedData = [];
@@ -59,6 +63,6 @@ export function downloadData(safe, ID) {
   const objUrl = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.setAttribute('href', objUrl);
-  link.setAttribute('download', `orev-${ID}-${day}-${time}.csv`);
+  link.setAttribute('download', `orev-vn-${ID}-${day}-${time}.csv`);
   link.click();
 }

@@ -32,7 +32,7 @@ if (storedChoices) {
 
 // get and store parameters. If local storage is empty, set default values
 studyChoices.subjID = studyChoices?.subjID ?? 'testID';
-studyChoices.webcam = studyChoices?.webcam ?? false;
+studyChoices.webcam = (studyChoices?.webcam ?? false).toString();
 studyChoices.saving = studyChoices?.saving ?? 'download';
 
 // define what happens on button click

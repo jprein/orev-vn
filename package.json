@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "deploy": "vite build && sh src/scripts/deploy.sh",
+    "dev": "bun vite",
+    "build": "bun vite build",
+    "preview": "bun vite preview",
+    "deploy": "bun vite build && sh src/scripts/deploy.sh",
     "fetchdata": "sh src/scripts/fetchdata.sh"
   },
   "keywords": [],
