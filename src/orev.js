@@ -125,8 +125,8 @@ document.addEventListener('DOMContentLoaded', function () {
       wordClass: allAudios[trialNr - 1].src.split('/').pop().startsWith('N_')
         ? 'noun'
         : allAudios[trialNr - 1].src.split('/').pop().startsWith('V_')
-        ? 'verb'
-        : 'unknown',
+          ? 'verb'
+          : 'unknown',
     };
 
     button.addEventListener('click', handleContinueClick, {

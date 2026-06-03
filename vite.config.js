@@ -36,9 +36,9 @@ export default defineConfig({
       },
 
       manifest: {
-        name: 'orev-pwa',
-        short_name: 'orev-pwa',
-        description: 'This is the orev as a PWA.',
+        name: 'orev-vn',
+        short_name: 'orev-vn',
+        description: 'This is the oREV-VN.',
         background_color: '#006c66',
         theme_color: '#006c66',
         start_url: './',
