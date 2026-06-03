@@ -1,4 +1,4 @@
-# oREV-VN: Open Receptive Vocabulary Task with Verbs and Nouns. An Extension of the oREV by Bohn\*, Prein\*, Koch, Bee, Delikaya, Haun, & Gagarina (2024).
+# oREV-VN: Addition of a Rasch-compliant subtest of verb comprehension to the oREV. Bohn\*, Carraro\*, ..., Prein, & Gagarina (2026).
 
 ### Usage
 
