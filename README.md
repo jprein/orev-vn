@@ -2,7 +2,7 @@
 
 ### Usage
 
-Link to task (in German): https://devpsy.web.leuphana.de/orev-pwa
+Link to task (in German): https://devpsy.web.leuphana.de/orev-vn
 
 ### Structure
 
