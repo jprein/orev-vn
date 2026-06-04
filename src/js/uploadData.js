@@ -2,7 +2,6 @@
 // FUNCTION FOR UPLOADING DATA TO LEUPHANA SERVER
 // ---------------------------------------------------------------------------------------------------------------------
 export async function uploadData(safe, ID) {
-  debugger;
   safe.forEach((item) => {
     item.subjID = ID;
     item.correct = item.targetWord === item.chosenWord;

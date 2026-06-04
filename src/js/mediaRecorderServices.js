@@ -12,51 +12,48 @@ let stopPromiseResolve = null;
  */
 export async function initMedia(constraints) {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    throw new Error("getUserMedia is not supported in this browser.");
+    throw new Error('getUserMedia is not supported in this browser.');
   }
 
   // Stop any existing stream tracks
   if (mediaStream) {
-    mediaStream.getTracks().forEach(track => track.stop());
+    mediaStream.getTracks().forEach((track) => track.stop());
     mediaStream = null;
   }
 
   const defaultConstraints = {
     audio: true,
     video: {
-      width: { ideal: 640, max: 640 },   // lower resolution
+      width: { ideal: 640, max: 640 }, // lower resolution
       height: { ideal: 480, max: 480 },
       frameRate: { ideal: 10, max: 15 }, // low-ish fps
-      facingMode: "user",
+      facingMode: 'user',
     },
   };
 
   const finalConstraints = constraints || defaultConstraints;
-  
-  
+
   try {
     mediaStream = await navigator.mediaDevices.getUserMedia(finalConstraints);
-    
   } catch (err) {
+    if (String(err).includes('No AVAudioSessionCaptureDevice')) {
+      console.warn('iOS cannot access microphone. Retrying without audio...');
 
-    if (String(err).includes("No AVAudioSessionCaptureDevice")) {
-      console.warn("iOS cannot access microphone. Retrying without audio...");
-      
       // Retry video-only
       mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
-          width: { ideal: 640, max: 640 },   // lower resolution
+          width: { ideal: 640, max: 640 }, // lower resolution
           height: { ideal: 480, max: 480 },
           frameRate: { ideal: 10, max: 15 }, // low-ish fps
-          facingMode: "user",
+          facingMode: 'user',
         },
-        audio: false
+        audio: false,
       });
     } else {
       throw err;
     }
   }
-  
+
   return mediaStream;
 }
 
@@ -65,14 +62,14 @@ export async function initMedia(constraints) {
  */
 export function startRecording() {
   if (!mediaStream) {
-    throw new Error("Media stream is not initialized. Call initMedia() first.");
+    throw new Error('Media stream is not initialized. Call initMedia() first.');
   }
 
   // Reset previous recording
   recordedChunks = [];
   lastRecordedBlob = null;
 
-  let supportedMimeType = "video/webm";
+  let supportedMimeType = 'video/webm';
 
   const recorderOptions = {
     mimeType: supportedMimeType,
@@ -82,29 +79,34 @@ export function startRecording() {
   const recorderOptionsWithoutMimeType = {
     videoBitsPerSecond: 150_000, // 150 kbps – quite low quality
   };
-  
+
   try {
     mediaRecorder = supportedMimeType
       ? new MediaRecorder(mediaStream, recorderOptions)
       : new MediaRecorder(mediaStream);
   } catch (err) {
-    console.error("Failed to create MediaRecorder:", err);
-    mediaRecorder = new MediaRecorder(mediaStream, recorderOptionsWithoutMimeType);
+    console.error('Failed to create MediaRecorder:', err);
+    mediaRecorder = new MediaRecorder(
+      mediaStream,
+      recorderOptionsWithoutMimeType,
+    );
     //throw err;
   }
 
-  mediaRecorder.ondataavailable = event => {
+  mediaRecorder.ondataavailable = (event) => {
     if (event.data && event.data.size > 0) {
       recordedChunks.push(event.data);
     }
   };
 
-  mediaRecorder.onerror = event => {
-    console.error("MediaRecorder error:", event.error);
+  mediaRecorder.onerror = (event) => {
+    console.error('MediaRecorder error:', event.error);
   };
 
   mediaRecorder.onstop = () => {
-    lastRecordedBlob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || "video/webm" });
+    lastRecordedBlob = new Blob(recordedChunks, {
+      type: mediaRecorder.mimeType || 'video/webm',
+    });
     if (stopPromiseResolve) {
       stopPromiseResolve(lastRecordedBlob);
       stopPromiseResolve = null;
@@ -120,13 +122,13 @@ export function startRecording() {
  * @returns {Promise<Blob>}
  */
 export function stopRecording() {
-  if (!mediaRecorder || mediaRecorder.state !== "recording") {
+  if (!mediaRecorder || mediaRecorder.state !== 'recording') {
     //return Promise.reject(new Error("No active recording to stop."));
-    console.warn("stopRecording called but there is no active recording.");
+    console.warn('stopRecording called but there is no active recording.');
     return Promise.resolve(null);
   }
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     stopPromiseResolve = resolve;
     mediaRecorder.stop();
   });
@@ -156,14 +158,14 @@ export function getLastRecordingUrl() {
  *
  * @param {string} [filename="recording.webm"]
  */
-export function downloadLastRecording(filename = "recording.webm") {
+export function downloadLastRecording(filename = 'recording.webm') {
   if (!lastRecordedBlob) {
-    throw new Error("No recording available to download.");
+    throw new Error('No recording available to download.');
   }
 
   const url = URL.createObjectURL(lastRecordedBlob);
-  const a = document.createElement("a");
-  a.style.display = "none";
+  const a = document.createElement('a');
+  a.style.display = 'none';
   a.href = url;
   a.download = filename;
   document.body.appendChild(a);
@@ -194,16 +196,16 @@ export function downloadLastRecording(filename = "recording.webm") {
 export async function uploadLastRecordingInChunks(
   endpointUrl,
   {
-    fieldName = "vidfile",
-    filename = "recording.webm",
+    fieldName = 'vidfile',
+    filename = 'recording.webm',
     chunkSize = 1024 * 1024 * 5, // 5MB
     additionalData = {},
     fetchOptions = {},
-    onProgress
-  } = {}
+    onProgress,
+  } = {},
 ) {
   if (!lastRecordedBlob) {
-    throw new Error("No recording available to upload.");
+    throw new Error('No recording available to upload.');
   }
 
   const totalSize = lastRecordedBlob.size;
@@ -211,7 +213,7 @@ export async function uploadLastRecordingInChunks(
 
   // Unique ID for this upload (so the server can group chunks)
   const uploadId =
-    Date.now().toString(36) + "-" + Math.random().toString(36).slice(2);
+    Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
 
   let uploadedBytes = 0;
   let lastResponse = null;
@@ -225,10 +227,10 @@ export async function uploadLastRecordingInChunks(
     formData.append(fieldName, chunk, filename);
 
     // Chunk metadata
-    formData.append("uploadId", uploadId);
-    formData.append("chunkIndex", chunkIndex.toString());
-    formData.append("totalChunks", totalChunks.toString());
-    formData.append("originalFilename", filename);
+    formData.append('uploadId', uploadId);
+    formData.append('chunkIndex', chunkIndex.toString());
+    formData.append('totalChunks', totalChunks.toString());
+    formData.append('originalFilename', filename);
 
     // Any extra fields you want
     Object.entries(additionalData).forEach(([key, value]) => {
@@ -236,28 +238,28 @@ export async function uploadLastRecordingInChunks(
     });
 
     const response = await fetch(endpointUrl, {
-      method: "POST",
+      method: 'POST',
       body: formData,
-      ...fetchOptions
+      ...fetchOptions,
     });
 
     if (!response.ok) {
       throw new Error(
-        `Chunk upload failed at index ${chunkIndex} with status ${response.status}`
+        `Chunk upload failed at index ${chunkIndex} with status ${response.status}`,
       );
     }
 
     lastResponse = response;
 
     uploadedBytes = end;
-    if (typeof onProgress === "function") {
+    if (typeof onProgress === 'function') {
       const progress = uploadedBytes / totalSize;
       onProgress(progress, {
         uploadedBytes,
         totalBytes: totalSize,
         chunkIndex,
         totalChunks,
-        uploadId
+        uploadId,
       });
     }
   }
@@ -265,15 +267,13 @@ export async function uploadLastRecordingInChunks(
   return lastResponse;
 }
 
-
-
 /**
  * Stop the current media stream (camera/mic).
  * Useful when leaving the page or after user is done.
  */
 export function stopMediaStream() {
   if (mediaStream) {
-    mediaStream.getTracks().forEach(track => track.stop());
+    mediaStream.getTracks().forEach((track) => track.stop());
     mediaStream = null;
   }
 }
@@ -284,5 +284,5 @@ export function stopMediaStream() {
  * @returns {boolean}
  */
 export function isMediaRecorderSupported() {
-  return typeof MediaRecorder !== "undefined";
+  return typeof MediaRecorder !== 'undefined';
 }

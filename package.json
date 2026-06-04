@@ -16,6 +16,8 @@
   "dependencies": {
     "@ccp-eva/media-recorder": "^2.1.1",
     "@vite-pwa/assets-generator": "^1.0.0",
+    "baseline-browser-mapping": "^2.10.33",
+    "caniuse-lite": "^1.0.30001793",
     "detectrtc": "^1.4.1",
     "vite": "^6.3.5",
     "vite-pwa": "^1.0.2",

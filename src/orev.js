@@ -3,14 +3,20 @@ import * as mrec from '@ccp-eva/media-recorder';
 import * as DetectRTC from 'detectrtc';
 
 import { downloadData } from './js/downloadData.js';
-import { uploadData } from './js/uploadData.js';
-import { uploadVideo } from './js/uploadVideo.js';
+import { downloadVideo } from './js/downloadVideo.js';
+// import { uploadData } from './js/uploadData.js';
+// import { uploadVideo } from './js/uploadVideo.js';
 import { pause } from './js/pause.js';
 // import { hideURLparams } from './js/hideURLparams.js';
 import { openFullscreen } from './js/openFullscreen.js';
 import { checkForTouchscreen } from './js/checkForTouchscreen.js';
 // import { randomizeNewTrials } from './js/randomizeNewTrials.js';
-import { isMediaRecorderSupported, initMedia, startRecording, stopRecording } from './js/mediaRecorderServices.js';
+import {
+  isMediaRecorderSupported,
+  initMedia,
+  startRecording,
+  stopRecording,
+} from './js/mediaRecorderServices.js';
 
 const storedChoices = localStorage.getItem('storedChoices');
 let studyChoices;
@@ -169,32 +175,33 @@ document.addEventListener('DOMContentLoaded', function () {
     if (trialNr === trialDivs.length) {
       studyChoices.ID = responseLog.meta.subjID;
       // Show fullscreen overlay (spinner
-      const overlay = document.querySelector("#uploadOverlay");
-      overlay.classList.remove("hidden");
+      const overlay = document.querySelector('#uploadOverlay');
+      overlay.classList.remove('hidden');
       try {
         await stopRecording();
       } catch (e) {
-        console.warn("Failed to stop recording, continuing anyway:", e);
+        console.warn('Failed to stop recording, continuing anyway:', e);
       }
 
       try {
-        await uploadData(responseLog.data, responseLog.meta.subjID);
+        await downloadData(responseLog.data, responseLog.meta.subjID);
+        // await uploadData(responseLog.data, responseLog.meta.subjID);
         await pause(2000);
       } catch (err) {
-        console.error("Error during uploading processing:", err);
-      } 
+        console.error('Error during uploading processing:', err);
+      }
       try {
-        if (responseLog.meta.webcam === "true") {
-          // !responseLog.meta.iOSSafari && 
-          await uploadVideo(responseLog.meta.webcam, responseLog.meta.subjID);
+        if (responseLog.meta.webcam === 'true') {
+          // !responseLog.meta.iOSSafari &&
+          await downloadVideo(responseLog.meta.webcam, responseLog.meta.subjID);
+          // await uploadVideo(responseLog.meta.webcam, responseLog.meta.subjID);
           await pause(5000);
         }
       } catch (err) {
-        console.error("Error during uploading processing:", err);
-      } 
-      overlay.classList.add("hidden");
-      window.location.href = `https://devpsy.web.leuphana.de/orev-consent/goodbye.html?subjID=${responseLog.meta.subjID}`;
-      //window.location.href = `goodbye.html?subjID=${responseLog.meta.subjID}`;
+        console.error('Error during uploading processing:', err);
+      }
+      overlay.classList.add('hidden');
+      window.location.href = 'goodbye.html';
     }
 
     // hide last Trial, show background (empty pictures) instead
@@ -272,40 +279,39 @@ document.addEventListener('DOMContentLoaded', function () {
   // START TRIALS
   // ---------------------------------------------------------------------------------------------------------------------
   // browser takes time for webcam permission
-    const startTrials = async () => {
+  const startTrials = async () => {
     await pause(500);
     // ---------------------------------------------------------------------------------------------------------------------
     // FOR DEMO: Conditional Recording (only if not iOS Safari)
     // ---------------------------------------------------------------------------------------------------------------------
-    if (responseLog.meta.webcam === "true") {
+    if (responseLog.meta.webcam === 'true') {
       // !responseLog.meta.iOSSafari &&
       if (!isMediaRecorderSupported()) {
-      console.log("MediaRecorder is not supported in this browser.");
-      }
-      else if (responseLog.meta.webcam === "true") {
+        console.log('MediaRecorder is not supported in this browser.');
+      } else if (responseLog.meta.webcam === 'true') {
         try {
-          console.log("Requesting camera/microphone...");
+          console.log('Requesting camera/microphone...');
           await initMedia({
             audio: true,
             video: {
               frameRate: { min: 1, ideal: 5, max: 10 },
-              width: { min: 640, ideal: 640, max: 640 },   // keep it small
+              width: { min: 640, ideal: 640, max: 640 }, // keep it small
               height: { min: 480, ideal: 480, max: 480 },
-              facingMode: "user",
+              facingMode: 'user',
             },
           });
-          console.log("Camera ready. You can start recording.");
+          console.log('Camera ready. You can start recording.');
 
           startRecording();
-        console.log("Recording started.");
+          console.log('Recording started.');
         } catch (error) {
-          console.error("Failed to access camera/microphone:", error);
+          console.error('Failed to access camera/microphone:', error);
         }
       }
     }
     await pause(2500);
 
-    button.style.display = "inline";
+    button.style.display = 'inline';
     button.disabled = false;
   };
   startTrials();
