@@ -64,6 +64,7 @@ export default defineConfig({
       },
 
       injectManifest: {
+        rollupFormat: 'iife',
         globPatterns: ['**/*.{js,css,html,svg,png,ico,mp3}'],
         maximumFileSizeToCacheInBytes: 3000000,
       },
