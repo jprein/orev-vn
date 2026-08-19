@@ -1,11 +1,10 @@
 import './css/orev.css';
-import * as mrec from '@ccp-eva/media-recorder';
 import * as DetectRTC from 'detectrtc';
 
 import { downloadData } from './js/downloadData.js';
 import { downloadVideo } from './js/downloadVideo.js';
-// import { uploadData } from './js/uploadData.js';
-// import { uploadVideo } from './js/uploadVideo.js';
+import { uploadData } from './js/uploadData.js';
+import { uploadVideo } from './js/uploadVideo.js';
 import { pause } from './js/pause.js';
 // import { hideURLparams } from './js/hideURLparams.js';
 import { openFullscreen } from './js/openFullscreen.js';
@@ -185,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       try {
         await downloadData(responseLog.data, responseLog.meta.subjID);
-        // await uploadData(responseLog.data, responseLog.meta.subjID);
+        await uploadData(responseLog.data, responseLog.meta.subjID);
         await pause(2000);
       } catch (err) {
         console.error('Error during uploading processing:', err);
@@ -194,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (responseLog.meta.webcam === 'true') {
           // !responseLog.meta.iOSSafari &&
           await downloadVideo(responseLog.meta.webcam, responseLog.meta.subjID);
-          // await uploadVideo(responseLog.meta.webcam, responseLog.meta.subjID);
+          await uploadVideo(responseLog.meta.webcam, responseLog.meta.subjID);
           await pause(5000);
         }
       } catch (err) {
