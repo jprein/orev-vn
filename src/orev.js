@@ -1,14 +1,21 @@
 import './css/orev.css';
-import * as mrec from '@ccp-eva/media-recorder';
 import * as DetectRTC from 'detectrtc';
 
 import { downloadData } from './js/downloadData.js';
+import { downloadVideo } from './js/downloadVideo.js';
 import { uploadData } from './js/uploadData.js';
+import { uploadVideo } from './js/uploadVideo.js';
 import { pause } from './js/pause.js';
 // import { hideURLparams } from './js/hideURLparams.js';
 import { openFullscreen } from './js/openFullscreen.js';
 import { checkForTouchscreen } from './js/checkForTouchscreen.js';
 // import { randomizeNewTrials } from './js/randomizeNewTrials.js';
+import {
+  isMediaRecorderSupported,
+  initMedia,
+  startRecording,
+  stopRecording,
+} from './js/mediaRecorderServices.js';
 
 const storedChoices = localStorage.getItem('storedChoices');
 let studyChoices;
@@ -41,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
       subjID: studyChoices?.subjID || 'testID',
       order: window.location.pathname.split('/').pop().replace('.html', ''),
       touchscreen: checkForTouchscreen(),
-      webcam: studyChoices?.webcam === 'true' || false,
-      saving: studyChoices?.saving || 'download',
+      webcam: studyChoices?.webcam || 'false',
+      //saving: studyChoices?.saving || 'download',
     },
     data: [],
   };
@@ -166,66 +173,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // end of trials
     if (trialNr === trialDivs.length) {
-      // for download
-      if (responseLog.meta.saving === 'download') {
-        downloadData(responseLog.data, responseLog.meta.subjID);
-        // save the video locally
-        if (!responseLog.meta.iOSSafari && responseLog.meta.webcam) {
-          mrec.stopRecorder();
-
-          // give some time to create Video Blob
-
-          const day = new Date().toISOString().substring(0, 10);
-          const time = new Date()
-            .toISOString()
-            .slice(11, 19)
-            .replaceAll(':', '-');
-
-          await pause(2000);
-          mrec.downloadVideo(`orev-${responseLog.meta.subjID}-${day}-${time}`);
-          await pause(2000);
-        }
-        window.location.href = `./goodbye.html`;
-        // for upload
-      } else if (responseLog.meta.saving === 'upload') {
-        uploadData(responseLog.data, responseLog.meta.subjID);
-        // give some time to create Video Blob
-        if (!responseLog.meta.iOSSafari && responseLog.meta.webcam) {
-          mrec.stopRecorder();
-
-          // show upload spinner
-          mrec.modalContent(
-            '<img src=\'/orev-vn/images/spinner-upload-de.svg\' style="width: 75vw">',
-            '#E1B4B4',
-          );
-
-          const day = new Date().toISOString().substring(0, 10);
-          const time = new Date()
-            .toISOString()
-            .slice(11, 19)
-            .replaceAll(':', '-');
-
-          await pause(2000);
-          // Wrap the upload in a Promise so that we can await it.
-          mrec.uploadVideo(
-            {
-              fname: `orev-${responseLog.meta.subjID}-${day}-${time}`,
-              uploadContent:
-                '<img src=\'/orev-vn/images/spinner-upload-de.svg\' style="width: 75vw">',
-              uploadColor: '#E1B4B4',
-              successContent:
-                '<img src=\'/orev-vn/images/spinner-done-de.svg\' style="width: 75vw">',
-              successColor: '#D3F9D3',
-            },
-            './data/upload_video.php',
-          );
-
-          await pause(20000);
-        }
-        await pause(2000);
-        studyChoices.subjID = responseLog.meta.subjID;
-        window.location.href = `https://devpsy.web.leuphana.de/orev-consent/goodbye.html?subjID=${responseLog.meta.subjID}`;
+      studyChoices.ID = responseLog.meta.subjID;
+      // Show fullscreen overlay (spinner
+      const overlay = document.querySelector('#uploadOverlay');
+      overlay.classList.remove('hidden');
+      try {
+        await stopRecording();
+      } catch (e) {
+        console.warn('Failed to stop recording, continuing anyway:', e);
       }
+
+      try {
+        await downloadData(responseLog.data, responseLog.meta.subjID);
+        await uploadData(responseLog.data, responseLog.meta.subjID);
+        await pause(2000);
+      } catch (err) {
+        console.error('Error during uploading processing:', err);
+      }
+      try {
+        if (responseLog.meta.webcam === 'true') {
+          // !responseLog.meta.iOSSafari &&
+          await downloadVideo(responseLog.meta.webcam, responseLog.meta.subjID);
+          await uploadVideo(responseLog.meta.webcam, responseLog.meta.subjID);
+          await pause(5000);
+        }
+      } catch (err) {
+        console.error('Error during uploading processing:', err);
+      }
+      overlay.classList.add('hidden');
+      window.location.href = `https://devpsy.web.leuphana.de/orev-consent/goodbye.html?subjID=${responseLog.meta.subjID}`;
+
     }
 
     // hide last Trial, show background (empty pictures) instead
@@ -307,32 +284,33 @@ document.addEventListener('DOMContentLoaded', function () {
     await pause(500);
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // FOR DEMO: Conditional Recording based on URL Params (only if not iOS Safari)
+    // FOR DEMO: Conditional Recording (only if not iOS Safari)
     // ---------------------------------------------------------------------------------------------------------------------
-    if (!responseLog.meta.iOSSafari && responseLog.meta.webcam) {
-      mrec.startRecorder({
-        audio: true,
-        video: {
-          frameRate: {
-            min: 3,
-            ideal: 3,
-            max: 3,
-          },
-          width: {
-            min: 80,
-            ideal: 80,
-            max: 80,
-          },
-          height: {
-            min: 60,
-            ideal: 60,
-            max: 60,
-          },
-          facingMode: 'user',
-        },
-      });
-    }
+    if (responseLog.meta.webcam === 'true') {
+      // !responseLog.meta.iOSSafari &&
+      if (!isMediaRecorderSupported()) {
+        console.log('MediaRecorder is not supported in this browser.');
+      } else if (responseLog.meta.webcam === 'true') {
+        try {
+          console.log('Requesting camera/microphone...');
+          await initMedia({
+            audio: true,
+            video: {
+              frameRate: { min: 1, ideal: 5, max: 10 },
+              width: { min: 640, ideal: 640, max: 640 }, // keep it small
+              height: { min: 480, ideal: 480, max: 480 },
+              facingMode: 'user',
+            },
+          });
+          console.log('Camera ready. You can start recording.');
 
+          startRecording();
+          console.log('Recording started.');
+        } catch (error) {
+          console.error('Failed to access camera/microphone:', error);
+        }
+      }
+    }
     await pause(2500);
 
     button.style.display = 'inline';
