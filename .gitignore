@@ -4,7 +4,7 @@
 src/scripts
 src/participant_data
 
-# dist/
+dist/
 
 # data (hide all json files)
 data/*.json
