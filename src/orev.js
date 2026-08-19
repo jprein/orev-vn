@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Error during uploading processing:', err);
       }
       overlay.classList.add('hidden');
-      window.location.href = `https://devpsy.web.leuphana.de/orev-consent/goodbye.html?subjID=${responseLog.meta.subjID}`;
+      window.location.href = './goodbye.html';
 
     }
 
