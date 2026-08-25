@@ -15,7 +15,16 @@ import {
   initMedia,
   startRecording,
   stopRecording,
+  stopMediaStream,
+  wasAudioCaptureDropped,
 } from './js/mediaRecorderServices.js';
+import {
+  initAudioMixer,
+  connectPromptAudioElements,
+  getMixedAudioTrack,
+  resumeAudioMixer,
+  closeAudioMixer,
+} from './js/audioMixerServices.js';
 
 const storedChoices = localStorage.getItem('storedChoices');
 let studyChoices;
@@ -154,6 +163,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // enable fullscreen and have short break, before first trial starts
     if (trialNr === 0) {
+      // for safari, the AudioContext used to mix recorded audio also needs
+      // to be resumed on user interaction
+      resumeAudioMixer();
       if (!devmode & !responseLog.meta.iOSSafari) openFullscreen();
       headingFullscreen.style.display = 'none';
       headingTestsound.style.display = 'inline';
@@ -180,6 +192,12 @@ document.addEventListener('DOMContentLoaded', function () {
         await stopRecording();
       } catch (e) {
         console.warn('Failed to stop recording, continuing anyway:', e);
+      }
+      try {
+        stopMediaStream();
+        closeAudioMixer();
+      } catch (e) {
+        console.warn('Failed to release camera/mic/audio mixer, continuing anyway:', e);
       }
 
       try {
@@ -290,8 +308,13 @@ document.addEventListener('DOMContentLoaded', function () {
       } else if (responseLog.meta.webcam === 'true') {
         try {
           console.log('Requesting camera/microphone...');
-          await initMedia({
-            audio: true,
+          const camStream = await initMedia({
+            audio: {
+              echoCancellation: true,
+              noiseSuppression: true,
+              autoGainControl: true,
+              channelCount: 1,
+            },
             video: {
               frameRate: { min: 1, ideal: 5, max: 10 },
               width: { min: 640, ideal: 640, max: 640 }, // keep it small
@@ -301,7 +324,25 @@ document.addEventListener('DOMContentLoaded', function () {
           });
           console.log('Camera ready. You can start recording.');
 
-          startRecording();
+          // surface a silent iOS mic fallback into the saved session metadata
+          // instead of losing a mic-less recording without anyone noticing
+          responseLog.meta.micDropped = wasAudioCaptureDropped();
+
+          let recordStream;
+          if (!responseLog.meta.micDropped) {
+            // mix the mic with the trial prompt audio elements so both the
+            // participant's voice and the word being played are clearly
+            // captured together, instead of relying on mic pickup off the speakers
+            initAudioMixer(camStream);
+            connectPromptAudioElements(allAudios);
+            resumeAudioMixer();
+            recordStream = new MediaStream([
+              ...camStream.getVideoTracks(),
+              ...(getMixedAudioTrack() ? [getMixedAudioTrack()] : []),
+            ]);
+          }
+
+          startRecording(recordStream);
           console.log('Recording started.');
         } catch (error) {
           console.error('Failed to access camera/microphone:', error);

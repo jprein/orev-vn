@@ -14,7 +14,7 @@ export async function uploadVideo(webcam, subjID) {
         .replaceAll(':', '-');
       try {
         await uploadLastRecordingInChunks('./data/upload_video.php', {
-          filename: `orev-vn-${subjID}-${day}-${time}`,
+          filename: `gdp-orev-vn-${subjID}-${day}-${time}`,
         });
       } catch (error) {
         console.log('Error is in upload video');

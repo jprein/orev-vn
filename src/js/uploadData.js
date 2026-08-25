@@ -63,7 +63,7 @@ export async function uploadData(safe, ID) {
   formData.append(
     'csvFile',
     new Blob([csvContent], { type: 'text/csv' }),
-    `orev-vn-${ID}-${day}-${time}.csv`,
+    `gdp-orev-vn-${ID}-${day}-${time}.csv`,
   );
 
   // Send the data to the server
