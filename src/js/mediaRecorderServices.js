@@ -3,6 +3,7 @@ let mediaRecorder = null;
 let recordedChunks = [];
 let lastRecordedBlob = null;
 let stopPromiseResolve = null;
+let audioFallbackTriggered = false;
 
 /**
  * Initialize camera + (optionally) microphone and attach to a <video> element.
@@ -21,8 +22,15 @@ export async function initMedia(constraints) {
     mediaStream = null;
   }
 
+  audioFallbackTriggered = false;
+
   const defaultConstraints = {
-    audio: true,
+    audio: {
+      echoCancellation: true,
+      noiseSuppression: true,
+      autoGainControl: true,
+      channelCount: 1,
+    },
     video: {
       width: { ideal: 640, max: 640 },   // lower resolution
       height: { ideal: 480, max: 480 },
@@ -41,7 +49,8 @@ export async function initMedia(constraints) {
 
     if (String(err).includes("No AVAudioSessionCaptureDevice")) {
       console.warn("iOS cannot access microphone. Retrying without audio...");
-      
+      audioFallbackTriggered = true;
+
       // Retry video-only
       mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
@@ -61,10 +70,17 @@ export async function initMedia(constraints) {
 }
 
 /**
- * Start recording the existing mediaStream.
+ * Start recording. By default records the stream captured by initMedia(),
+ * but an override stream (e.g. camera video mixed with a separately
+ * combined audio track) can be passed in instead.
+ *
+ * @param {MediaStream} [streamOverride] - Optional stream to record instead
+ *   of the module-level mediaStream from initMedia().
  */
-export function startRecording() {
-  if (!mediaStream) {
+export function startRecording(streamOverride) {
+  const streamToRecord = streamOverride || mediaStream;
+
+  if (!streamToRecord) {
     throw new Error("Media stream is not initialized. Call initMedia() first.");
   }
 
@@ -77,19 +93,21 @@ export function startRecording() {
   const recorderOptions = {
     mimeType: supportedMimeType,
     videoBitsPerSecond: 150_000, // 150 kbps – quite low quality
+    audioBitsPerSecond: 32_000, // 32 kbps – clear for speech, kept low like video
   };
 
   const recorderOptionsWithoutMimeType = {
     videoBitsPerSecond: 150_000, // 150 kbps – quite low quality
+    audioBitsPerSecond: 32_000, // 32 kbps – clear for speech, kept low like video
   };
-  
+
   try {
     mediaRecorder = supportedMimeType
-      ? new MediaRecorder(mediaStream, recorderOptions)
-      : new MediaRecorder(mediaStream);
+      ? new MediaRecorder(streamToRecord, recorderOptions)
+      : new MediaRecorder(streamToRecord);
   } catch (err) {
     console.error("Failed to create MediaRecorder:", err);
-    mediaRecorder = new MediaRecorder(mediaStream, recorderOptionsWithoutMimeType);
+    mediaRecorder = new MediaRecorder(streamToRecord, recorderOptionsWithoutMimeType);
     //throw err;
   }
 
@@ -139,6 +157,18 @@ export function stopRecording() {
  */
 export function getLastRecordingBlob() {
   return lastRecordedBlob;
+}
+
+/**
+ * Whether the most recent initMedia() call silently fell back to
+ * video-only because microphone capture failed (e.g. the iOS
+ * "No AVAudioSessionCaptureDevice" case). Useful for logging into
+ * session metadata so a mic-less recording isn't a silent surprise.
+ *
+ * @returns {boolean}
+ */
+export function wasAudioCaptureDropped() {
+  return audioFallbackTriggered;
 }
 
 /**

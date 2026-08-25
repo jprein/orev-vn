@@ -17,7 +17,7 @@ export async function downloadVideo(webcam, subjID) {
         // save video locally
         setTimeout(() => {
          downloadLastRecording(
-          `orev-vn-${subjID}-${day}-${time}`,
+          `gdp-orev-vn-${subjID}-${day}-${time}`,
         );
         }, 2000);
             

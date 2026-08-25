@@ -13,7 +13,7 @@ export async function uploadVideo(webcam, subjID) {
         const day = new Date().toISOString().substring(0, 10);
         const time = new Date().toISOString().substring(11, 19).replaceAll(':', '-');
         try {
-          await uploadLastRecordingInChunks('./data/upload_video.php', { filename: `orev-vn-${subjID}-${day}-${time}` })
+          await uploadLastRecordingInChunks('./data/upload_video.php', { filename: `gdp-orev-vn-${subjID}-${day}-${time}` })
         } catch (error) {
           console.log("Error is in upload video");
         }
