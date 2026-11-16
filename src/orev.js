@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
       timestamp: new Date(parseInt(t1)).toISOString(),
       responseTime: t1 - t0,
       trial: trialNr - 1,
+      language: 'kikuyu',
       // split('/').pop(): splits string at / and keeps only last element
       // then remove N_ and .jpg
       targetWord: allAudios[trialNr - 1].src
