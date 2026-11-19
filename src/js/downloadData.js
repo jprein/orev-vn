@@ -61,6 +61,6 @@ export function downloadData(safe, ID) {
   const objUrl = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.setAttribute('href', objUrl);
-  link.setAttribute('download', `orev-${ID}-${day}-${time}.csv`);
+  link.setAttribute('download', `gdp-orev-${ID}-${day}-${time}.csv`);
   link.click();
 }

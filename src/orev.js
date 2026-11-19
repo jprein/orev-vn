@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .replaceAll(':', '-');
 
           await pause(2000);
-          mrec.downloadVideo(`orev-${responseLog.meta.subjID}-${day}-${time}`);
+          mrec.downloadVideo(`gdp-orev-${responseLog.meta.subjID}-${day}-${time}`);
           await pause(2000);
         }
         window.location.href = `./goodbye.html`;
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
           // Wrap the upload in a Promise so that we can await it.
           mrec.uploadVideo(
             {
-              fname: `orev-${responseLog.meta.subjID}-${day}-${time}`,
+              fname: `gdp-orev-${responseLog.meta.subjID}-${day}-${time}`,
               uploadContent:
                 '<img src=\'/orev-vn/images/spinner-upload-de.svg\' style="width: 75vw">',
               uploadColor: '#E1B4B4',
