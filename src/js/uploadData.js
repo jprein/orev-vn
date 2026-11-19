@@ -10,6 +10,7 @@ export async function uploadData(safe, ID) {
   // convert object into CSV string
   const titleKeys = [
     'subjID',
+    'language',
     'trial',
     'wordClass',
     'targetWord',
@@ -25,6 +26,7 @@ export async function uploadData(safe, ID) {
 
   const columnNames = [
     'id',
+    'language',
     'trial',
     'word_class',
     'target_word',
